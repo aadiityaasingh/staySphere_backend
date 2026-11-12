@@ -2,6 +2,9 @@
 
 Production RESTful JSON API for the StaySphere rental marketplace. Built with **Node.js**, **Express 5**, **MongoDB Atlas**, **Mongoose**, **Passport.js**, **Stripe**, and **Cloudinary**.
 
+> 🚀 **Live Demo:** [stayspherefrontend.vercel.app](https://stayspherefrontend.vercel.app/)  
+> 🌐 **Frontend Client Repository:** [staySphere_frontend](https://github.com/aadiityaasingh/staySphere_frontend)
+
 ---
 
 ## 🛠 Tech Stack
