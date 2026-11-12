@@ -3,7 +3,7 @@ services:
     name: staysphere-api
     env: node
     plan: free
-    rootDir: backend
+    rootDir: .
     buildCommand: npm ci
     startCommand: npm start
     healthCheckPath: /api/health
