@@ -156,6 +156,29 @@ const initDB = async () => {
           obj.country
         );
 
+        // Assign realistic property types, rooms & amenities
+        let propertyType = "entire_place";
+        const text = `${obj.title} ${obj.description}`.toLowerCase();
+        if (category === "castles" || text.includes("villa")) {
+          propertyType = "villa";
+        } else if (category === "mountains" || text.includes("cabin") || text.includes("chalet")) {
+          propertyType = "cabin";
+        } else if (category === "rooms" || text.includes("room")) {
+          propertyType = "private_room";
+        }
+
+        const bedrooms = (index % 4) + 1; // 1 to 4
+        const beds = bedrooms + (index % 2); // 1 to 5
+        const bathrooms = Math.max(1, Math.floor(bedrooms / 2) + 1); // 1 to 3
+
+        const amenities = ["wifi", "kitchen"];
+        if (index % 2 === 0 || text.includes("air") || text.includes("ac")) amenities.push("ac");
+        if (category === "amazing-pools" || text.includes("pool") || index % 3 === 0) amenities.push("pool");
+        if (category === "iconic-cities" || index % 2 === 1) amenities.push("workspace");
+        if (propertyType === "villa" || propertyType === "cabin" || index % 3 === 1) amenities.push("parking");
+        if (category === "adventure" || index % 4 === 0) amenities.push("pets");
+        if (index % 5 === 0) amenities.push("hottub");
+
         const gallery = [
           mainImage,
           {
@@ -180,6 +203,11 @@ const initDB = async () => {
           ...obj,
           owner: demoUser._id,
           category,
+          propertyType,
+          bedrooms,
+          beds,
+          bathrooms,
+          amenities,
           geometry: geo,
           images: gallery,
           image: mainImage,

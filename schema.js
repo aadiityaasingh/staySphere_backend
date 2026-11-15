@@ -23,6 +23,11 @@ module.exports.listingSchema = Joi.object({
       .allow("", null),
     image: Joi.any().allow("", null),
     images: Joi.any().allow("", null),
+    propertyType: Joi.string().allow("", null),
+    bedrooms: Joi.number().min(1).allow("", null),
+    beds: Joi.number().min(1).allow("", null),
+    bathrooms: Joi.number().min(1).allow("", null),
+    amenities: Joi.any().allow("", null),
   }).required(),
 });
 

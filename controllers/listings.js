@@ -2,7 +2,17 @@ const Listing = require("../models/listing.js");
 const { geocodeAddress } = require("../utils/geocode.js");
 
 module.exports.index = async (req, res) => {
-  const { category, search, minPrice, maxPrice } = req.query;
+  const {
+    category,
+    search,
+    minPrice,
+    maxPrice,
+    propertyType,
+    bedrooms,
+    beds,
+    bathrooms,
+    amenities,
+  } = req.query;
   let conditions = [];
 
   if (category && category !== "all" && category !== "trending") {
@@ -113,6 +123,35 @@ module.exports.index = async (req, res) => {
         { description: { $regex: term, $options: "i" } },
       ],
     });
+  }
+
+  // Property Type Filter
+  if (propertyType && propertyType !== "any") {
+    conditions.push({ propertyType });
+  }
+
+  // Minimum Bedrooms, Beds, Bathrooms
+  if (bedrooms && !isNaN(Number(bedrooms)) && Number(bedrooms) > 0) {
+    conditions.push({ bedrooms: { $gte: Number(bedrooms) } });
+  }
+  if (beds && !isNaN(Number(beds)) && Number(beds) > 0) {
+    conditions.push({ beds: { $gte: Number(beds) } });
+  }
+  if (bathrooms && !isNaN(Number(bathrooms)) && Number(bathrooms) > 0) {
+    conditions.push({ bathrooms: { $gte: Number(bathrooms) } });
+  }
+
+  // Amenities Filter (match all selected amenities)
+  if (amenities) {
+    const list = Array.isArray(amenities)
+      ? amenities
+      : String(amenities)
+          .split(",")
+          .map((a) => a.trim().toLowerCase())
+          .filter(Boolean);
+    if (list.length > 0) {
+      conditions.push({ amenities: { $all: list } });
+    }
   }
 
   let query = {};

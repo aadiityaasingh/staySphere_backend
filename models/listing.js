@@ -60,6 +60,29 @@ const listingSchema = new Schema(
       ],
       default: "trending",
     },
+    propertyType: {
+      type: String,
+      default: "entire_place",
+    },
+    bedrooms: {
+      type: Number,
+      default: 1,
+      min: 1,
+    },
+    beds: {
+      type: Number,
+      default: 1,
+      min: 1,
+    },
+    bathrooms: {
+      type: Number,
+      default: 1,
+      min: 1,
+    },
+    amenities: {
+      type: [String],
+      default: ["wifi", "kitchen"],
+    },
     geometry: {
       type: {
         type: String,

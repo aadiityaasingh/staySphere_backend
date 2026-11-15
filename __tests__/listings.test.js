@@ -34,6 +34,20 @@ describe("Listings REST API", () => {
     expect(Array.isArray(res.body.listings)).toBe(true);
   });
 
+  it("GET /api/v1/listings?propertyType=villa should return filtered property types", async () => {
+    const res = await request(app).get("/api/v1/listings?propertyType=villa");
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty("success", true);
+    expect(Array.isArray(res.body.listings)).toBe(true);
+  });
+
+  it("GET /api/v1/listings?amenities=wifi,pool should return listings with requested amenities", async () => {
+    const res = await request(app).get("/api/v1/listings?amenities=wifi,pool");
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty("success", true);
+    expect(Array.isArray(res.body.listings)).toBe(true);
+  });
+
   it("GET /api/v1/listings/:id should return single listing details", async () => {
     if (!sampleListingId) return;
     const res = await request(app).get(`/api/v1/listings/${sampleListingId}`);
